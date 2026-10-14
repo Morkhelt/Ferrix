@@ -1,0 +1,19 @@
+[package]
+name = "ferrix-kernel"
+description = "The Ferrix kernel."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+limine = "0.6.5"
+spin = "0.12.3"
+
+# A freestanding binary cannot link libtest, so the default test and bench
+# targets would fail to build under `cargo clippy --all-targets`.
+[[bin]]
+name = "ferrix-kernel"
+path = "src/main.rs"
+test = false
+bench = false
