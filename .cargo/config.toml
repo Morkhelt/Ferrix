@@ -1,0 +1,14 @@
+# The kernel is freestanding: no OS, no std. The linker script is supplied by
+# kernel/build.rs so that it resolves regardless of where cargo is invoked from.
+[build]
+target = "x86_64-unknown-none"
+
+[target.x86_64-unknown-none]
+rustflags = [
+    # A fixed load address, so the image needs no dynamic relocations at boot.
+    "-C", "relocation-model=static",
+    # The kernel lives in the top 2 GiB, which lets the compiler address
+    # statics with sign-extended 32-bit offsets instead of full 64-bit moves.
+    "-C", "code-model=kernel",
+    "-C", "link-arg=-no-pie",
+]
